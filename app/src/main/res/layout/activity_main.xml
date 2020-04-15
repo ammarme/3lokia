@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/ic_stop"
         android:contentDescription="@string/stop_button_content_description"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/startPauseButton"
         android:layout_width="80dp"
         android:layout_height="80dp"

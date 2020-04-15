@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import artem122ya.tomatotimer.R;
 import artem122ya.tomatotimer.utils.ThemeManager;
@@ -23,7 +25,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 .setLightTheme(R.style.AppThemeLight)
                 .applyTheme();
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 

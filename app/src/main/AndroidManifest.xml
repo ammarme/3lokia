@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="artem122ya.tomatotimer">
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />d
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
+
         <activity
-            android:name=".timer.TimerActivity"
+            android:name="artem122ya.MAinMenuActivity"
             android:launchMode="singleTask"
             android:theme="@style/TimerActivityLight">
             <intent-filter>
@@ -25,12 +26,25 @@
             android:enabled="true"
             android:exported="true" />
 
+
+        <activity
+            android:name="artem122ya.Note.AddEditNoteActivity"
+            android:label="eeeee" />
+        <activity
+            android:name="artem122ya.Note.MainNoteActivity"
+            android:label="wwwwww" />
+
+        <activity
+            android:name=".timer.TimerActivity"
+            android:label="eeww" />
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/settings_label" />
         <activity
             android:name=".about.AboutActivity"
             android:label="@string/about_label" />
+
+
     </application>
 
 </manifest>

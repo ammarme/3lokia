@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 
 import artem122ya.tomatotimer.R;
@@ -238,6 +239,8 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
             }
             sendTime(getTimeLeftMillis(currentPeriod), getTimeLeftMillis(currentPeriod));
         }
+
+
     }
 
     public void skipPeriod(){

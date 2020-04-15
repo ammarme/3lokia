@@ -1,8 +1,10 @@
 package artem122ya.tomatotimer.about;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import artem122ya.tomatotimer.R;
 import artem122ya.tomatotimer.utils.ThemeManager;
