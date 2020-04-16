@@ -6,14 +6,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -23,6 +27,7 @@ import static artem122ya.tomatotimer.utils.Utils.getTimeString;
 
 public class TimerService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final String TAG = "TimerService";
     public static String ACTION_SEND_TIME = "artem122ya.tomatotimer.time_send";
     public static String INT_TIME_MILLIS_LEFT = "artem122ya.tomatotimer.time_extra_millis_left";
     public static String INT_TIME_MILLIS_TOTAL = "artem122ya.tomatotimer.time_extra_millis_total";
@@ -231,6 +236,9 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
 
     public void stopTimer() {
 
+
+        Log.d(TAG, "stopTimer: "+ "nice");
+
         if (timerState != TimerState.STOPPED) {
             synchronized (timerThreadLock) {
                 moveToNextPeriod();
@@ -239,8 +247,6 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
             }
             sendTime(getTimeLeftMillis(currentPeriod), getTimeLeftMillis(currentPeriod));
         }
-
-
     }
 
     public void skipPeriod(){
@@ -396,6 +402,10 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
     }
 
     private void timerFinishedNotification(){
+        Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.aish);
+
+//        Uri defaultSoundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/mysound");
+
         Notification.Builder builder =
                 new Notification.Builder(this)
                         .setSmallIcon(R.mipmap.ic_notification_icon)
@@ -411,13 +421,15 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
                         .addAction(new Notification.Action(R.drawable.ic_stop_black_24dp,
                                 getString(R.string.stop_notification_action_title), stopActionIntent))
                         .setVisibility(Notification.VISIBILITY_PUBLIC)
-                        .setDefaults(Notification.DEFAULT_ALL)
+//                        .setDefaults(Notification.DEFAULT_SOUND)
                         .setPriority(Notification.PRIORITY_MAX)
+                        .setSound(sound)
                         .setCategory(Notification.CATEGORY_ALARM);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             builder.setChannelId(timerFinishedNotificationChannelId);
         }
+
 
 
         startForeground(timerNotificationId, builder.build());
