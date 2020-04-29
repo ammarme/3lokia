@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,10 +15,11 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import artem122ya.tomatotimer.R;
 
@@ -27,11 +27,15 @@ import static artem122ya.tomatotimer.utils.Utils.getTimeString;
 
 public class TimerService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+
+
     private static final String TAG = "TimerService";
     public static String ACTION_SEND_TIME = "artem122ya.tomatotimer.time_send";
     public static String INT_TIME_MILLIS_LEFT = "artem122ya.tomatotimer.time_extra_millis_left";
     public static String INT_TIME_MILLIS_TOTAL = "artem122ya.tomatotimer.time_extra_millis_total";
     public static String ENUM_TIMER_STATE = "artem122ya.tomatotimer.timer_state";
+    private List<Integer> mSoundId;
+    private int mListindex;
 
 
     public enum TimerState {STARTED, PAUSED, STOPPED}
@@ -402,7 +406,33 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
     }
 
     private void timerFinishedNotification(){
-        Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.aish);
+
+        double random = Math.random() * 3 + 1;
+
+        List<Integer> soundList = new ArrayList<Integer>();
+        soundList.add(R.raw.aish);
+        soundList.add(R.raw.sway);
+        soundList.add(R.raw.yanas);
+        soundList.add(R.raw.yanas);
+
+        Random rn = new Random();
+//        int range = maximum - minimum + 1;
+        int range =2 - 0 + 1;
+        int randomNum =  rn.nextInt(range) + 1;
+
+
+
+//        double randomsooo = Math.random() * 2 + 1;
+//        int randomInt = (new Random().nextInt(soundList.size()));
+//        int sound1 = soundList.get(randomInt);
+//
+//        MediaPlayer mp = MediaPlayer.create(this, sound1);
+
+
+        Log.d(TAG, "ammar: "+ randomNum);
+
+
+        Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + soundList.get((randomNum)));
 
 //        Uri defaultSoundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + getPackageName() + "/raw/mysound");
 
@@ -516,5 +546,15 @@ public class TimerService extends Service implements SharedPreferences.OnSharedP
             }
         }
 
+    }
+
+
+    public void setImageIds(List<Integer> soundId) {
+        mSoundId = soundId;
+    }
+
+
+    public void setListIndex(int index) {
+        mListindex = index;
     }
 }
